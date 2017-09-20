@@ -1,0 +1,197 @@
+{
+    "AWSTemplateFormatVersion": "2010-09-09",
+    "Parameters": {
+        "ParmMXRecordValue": {
+            "Type": "String"
+        }
+    },
+    "Resources": {
+        "R53HZROOT": {
+            "Type": "AWS::Route53::HostedZone",
+            "Properties": {
+                "Name": "myamazingtech.com",
+                "HostedZoneConfig": {
+                    "Comment": "The root hosted zone for myamazingtech.com."
+                },
+                "HostedZoneTags": [
+                    {
+                        "Key": "app",
+                        "Value": "myamazingtech"
+                    }
+                ]
+            }
+        },
+        "R53RSMX": {
+            "Type": "AWS::Route53::RecordSet",
+            "Properties": {
+                "HostedZoneId": {
+                    "Ref": "R53HZROOT"
+                },
+                "Name": "myamazingtech.com",
+                "Type": "MX",
+                "ResourceRecords": [
+                    {
+                        "Ref": "ParmMXRecordValue"
+                    }
+                ],
+                "TTL": "3600"
+            },
+            "DependsOn": [
+                "R53HZROOT"
+            ]
+        },
+        "R53RSCNAMEAutoDiscover": {
+            "Type": "AWS::Route53::RecordSet",
+            "Properties": {
+                "HostedZoneId": {
+                    "Ref": "R53HZROOT"
+                },
+                "Name": "autodiscover.myamazingtech.com",
+                "Type": "CNAME",
+                "ResourceRecords": [
+                    "autodiscover.outlook.com"
+                ],
+                "TTL": "3600"
+            },
+            "DependsOn": [
+                "R53HZROOT"
+            ]
+        },
+        "R53RSCNAMESip": {
+            "Type": "AWS::Route53::RecordSet",
+            "Properties": {
+                "HostedZoneId": {
+                    "Ref": "R53HZROOT"
+                },
+                "Name": "sip.myamazingtech.com",
+                "Type": "CNAME",
+                "ResourceRecords": [
+                    "sipdir.online.lync.com"
+                ],
+                "TTL": "3600"
+            },
+            "DependsOn": [
+                "R53HZROOT"
+            ]
+        },
+        "R53RSCNAMELyncDiscover": {
+            "Type": "AWS::Route53::RecordSet",
+            "Properties": {
+                "HostedZoneId": {
+                    "Ref": "R53HZROOT"
+                },
+                "Name": "lyncdiscover.myamazingtech.com",
+                "Type": "CNAME",
+                "ResourceRecords": [
+                    "webdir.online.lync.com"
+                ],
+                "TTL": "3600"
+            },
+            "DependsOn": [
+                "R53HZROOT"
+            ]
+        },
+        "R53RSCNAMEMsoid": {
+            "Type": "AWS::Route53::RecordSet",
+            "Properties": {
+                "HostedZoneId": {
+                    "Ref": "R53HZROOT"
+                },
+                "Name": "msoid.myamazingtech.com",
+                "Type": "CNAME",
+                "ResourceRecords": [
+                    "clientconfig.microsoftonline-p.net"
+                ],
+                "TTL": "3600"
+            },
+            "DependsOn": [
+                "R53HZROOT"
+            ]
+        },
+        "R53RSCNAMEEnterpriseRegistration": {
+            "Type": "AWS::Route53::RecordSet",
+            "Properties": {
+                "HostedZoneId": {
+                    "Ref": "R53HZROOT"
+                },
+                "Name": "enterpriseregistration.myamazingtech.com",
+                "Type": "CNAME",
+                "ResourceRecords": [
+                    "enterpriseregistration.windows.net"
+                ],
+                "TTL": "3600"
+            },
+            "DependsOn": [
+                "R53HZROOT"
+            ]
+        },
+        "R53RSCNAMEEnterpriseEnrollment": {
+            "Type": "AWS::Route53::RecordSet",
+            "Properties": {
+                "HostedZoneId": {
+                    "Ref": "R53HZROOT"
+                },
+                "Name": "enterpriseenrollment.myamazingtech.com",
+                "Type": "CNAME",
+                "ResourceRecords": [
+                    "enterpriseenrollment.manage.microsoft.com"
+                ],
+                "TTL": "3600"
+            },
+            "DependsOn": [
+                "R53HZROOT"
+            ]
+        },
+        "R53RSTXT": {
+            "Type": "AWS::Route53::RecordSet",
+            "Properties": {
+                "HostedZoneId": {
+                    "Ref": "R53HZROOT"
+                },
+                "Name": "myamazingtech.com",
+                "Type": "TXT",
+                "ResourceRecords": [
+                    "\"v=spf1 include:spf.protection.outlook.com -all\""
+                ],
+                "TTL": "3600"
+            },
+            "DependsOn": [
+                "R53HZROOT"
+            ]
+        },
+        "R53RSSRVSipTls": {
+            "Type": "AWS::Route53::RecordSet",
+            "Properties": {
+                "HostedZoneId": {
+                    "Ref": "R53HZROOT"
+                },
+                "Name": "_sip._tls.myamazingtech.com",
+                "Type": "SRV",
+                "ResourceRecords": [
+                    "100 1 443 sipdir.online.lync.com"
+                ],
+                "TTL": "3600"
+            },
+            "DependsOn": [
+                "R53HZROOT"
+            ]
+        },
+        "R53RSSRVSipTlsTcp": {
+            "Type": "AWS::Route53::RecordSet",
+            "Properties": {
+                "HostedZoneId": {
+                    "Ref": "R53HZROOT"
+                },
+                "Name": "_sipfederationtls._tcp.myamazingtech.com",
+                "Type": "SRV",
+                "ResourceRecords": [
+                    "100 1 5061 sipfed.online.lync.com"
+                ],
+                "TTL": "3600"
+            },
+            "DependsOn": [
+                "R53HZROOT"
+            ]
+        }
+    }
+}
